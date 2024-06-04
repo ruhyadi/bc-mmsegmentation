@@ -1,0 +1,25 @@
+{
+    "name": "mmseg-devel",
+    "privileged": true,
+    "remoteUser": "didi",
+    "build": {
+        "dockerfile": "../dockerfile.devel",
+        "args": { "USERNAME": "didi" }
+    },
+    "workspaceFolder": "/app",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
+    "runArgs": ["--gpus=all", "--shm-size=16g"],
+    "postCreateCommand": "pip install --no-cache-dir -e .",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "eamodio.gitlens",
+                "redhat.vscode-yaml",
+                "yzhang.markdown-all-in-one"
+            ]
+        }
+    }
+}
