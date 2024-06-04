@@ -4,3 +4,4 @@
 -r requirements/multimodal.txt
 
 rootutils==1.0.7 # rootutils
+wandb # training monitoring
