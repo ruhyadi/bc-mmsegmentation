@@ -488,6 +488,18 @@ def hsidrive_palette():
             [255, 166, 0], [0, 204, 204]]
 
 
+def breastcancer_classes():
+    """BreastCancer class names for external use."""
+    return [
+        'background', 'tumor'
+    ]
+
+
+def breastcancer_palette():
+    """BreastCancer palette for external use."""
+    return [[0, 0, 0], [255, 0, 0]]
+
+
 dataset_aliases = {
     'cityscapes': ['cityscapes'],
     'ade': ['ade', 'ade20k'],
@@ -510,7 +522,8 @@ dataset_aliases = {
     'hsidrive': [
         'hsidrive', 'HSIDrive', 'HSI-Drive', 'hsidrive20', 'HSIDrive20',
         'HSI-Drive20'
-    ]
+    ],
+    'breastcancer': ['breastcancer', 'BreastCancer', 'BreastCancerDataset', 'breast_cancer'],
 }
 
 

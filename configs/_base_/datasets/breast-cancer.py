@@ -1,10 +1,10 @@
 # dataset settings
-dataset_type = "ADE20KDataset"  # breast cancer dataset
-data_root = "data/bc-dataset/tmp/data2"
+dataset_type = "BreastCancerDataset"  # breast cancer dataset
+data_root = "data/bc-dataset/tmp/data5"
 crop_size = (512, 512)
 train_pipeline = [
     dict(type="LoadImageFromFile"),
-    dict(type="LoadAnnotations", reduce_zero_label=True),
+    dict(type="LoadAnnotations", reduce_zero_label=False),
     dict(
         type="RandomResize", scale=(2048, 512), ratio_range=(0.5, 2.0), keep_ratio=True
     ),
@@ -18,7 +18,7 @@ test_pipeline = [
     dict(type="Resize", scale=(2048, 512), keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
-    dict(type="LoadAnnotations", reduce_zero_label=True),
+    dict(type="LoadAnnotations", reduce_zero_label=False),
     dict(type="PackSegInputs"),
 ]
 img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
