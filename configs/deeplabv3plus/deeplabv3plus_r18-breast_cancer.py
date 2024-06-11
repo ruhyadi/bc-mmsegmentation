@@ -12,6 +12,6 @@ data_preprocessor = dict(size=crop_size)
 
 model = dict(
     data_preprocessor=data_preprocessor,
-    decode_head=dict(num_classes=2),
-    auxiliary_head=dict(num_classes=2),
+    decode_head=dict(num_classes=1),
+    auxiliary_head=dict(num_classes=1),
 )

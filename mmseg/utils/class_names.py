@@ -490,14 +490,12 @@ def hsidrive_palette():
 
 def breastcancer_classes():
     """BreastCancer class names for external use."""
-    return [
-        'background', 'tumor'
-    ]
+    return ['tumor']
 
 
 def breastcancer_palette():
     """BreastCancer palette for external use."""
-    return [[0, 0, 0], [255, 0, 0]]
+    return [[100, 100, 100]]
 
 
 dataset_aliases = {
