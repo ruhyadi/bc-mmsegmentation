@@ -1,9 +1,9 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-data_root = "data/DRIVE"
-img_scale = (584, 565)
+data_root = "data/bc-dataset/tmp/data_final"
+img_scale = (1500, 1188)
 # crop_size = (6000, 4751)
-crop_size = (1500, 1188)
+crop_size = (512, 512)
 
 train_pipeline = [
     dict(type="LoadImageFromFile"),
@@ -49,9 +49,7 @@ train_dataloader = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            data_prefix=dict(
-                img_path="images/training", seg_map_path="annotations/training"
-            ),
+            data_prefix=dict(img_path="images/train", seg_map_path="annotations/train"),
             pipeline=train_pipeline,
         ),
     ),
@@ -64,9 +62,7 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        data_prefix=dict(
-            img_path="images/validation", seg_map_path="annotations/validation"
-        ),
+        data_prefix=dict(img_path="images/val", seg_map_path="annotations/val"),
         pipeline=test_pipeline,
     ),
 )
