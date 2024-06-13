@@ -9,12 +9,16 @@ class BreastCancerDataset(BaseSegDataset):
     """Breast cancer dataset."""
 
     METAINFO = dict(
-        classes=(["tumor"]),
-        pallete=[[100, 100, 100]],
+        classes=(["background", "tumor"]),
+        pallete=[[100, 100, 100], [200, 200, 200]],
     )
 
     def __init__(
-        self, img_suffix=".jpg", seg_map_suffix=".png", reduce_zero_label=True, **kwargs
+        self,
+        img_suffix=".jpg",
+        seg_map_suffix=".png",
+        reduce_zero_label=False,
+        **kwargs
     ) -> None:
         super().__init__(
             img_suffix=img_suffix,
