@@ -45,7 +45,7 @@ train_dataloader = dict(
     sampler=dict(type="InfiniteSampler", shuffle=True),
     dataset=dict(
         type="RepeatDataset",
-        times=10000,
+        times=40000,
         dataset=dict(
             type=dataset_type,
             data_root=data_root,

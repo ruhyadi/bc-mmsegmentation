@@ -9,6 +9,7 @@
     "workspaceFolder": "/app",
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
     "runArgs": ["--gpus=all", "--shm-size=16g"],
+    "containerEnv": {"TZ": "Asia/Jakarta"},
     "postCreateCommand": "pip install --no-cache-dir -e .",
     "customizations": {
         "vscode": {
