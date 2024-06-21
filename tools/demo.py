@@ -49,7 +49,7 @@ def demo2():
     inferencer = MMSegInferencer(
         config_path,
         checkpoint_path,
-        device="cpu",
+        device="cuda:0",
         classes=["background", "tumor"],
         palette=[[0, 0, 0], [255, 255, 255]],
     )
@@ -57,7 +57,7 @@ def demo2():
     imgs_path = "data/bc-dataset/tmp/data_final/images/val"
     imgs_path = Path(imgs_path)
 
-    output_dir = "tmp/breast-cancer-4"
+    output_dir = "tmp/breast-cancer-5"
     output_dir = Path(output_dir)
 
     for i, img_path in tqdm(enumerate(sorted(list(imgs_path.glob("*.jpg"))))):
@@ -65,7 +65,8 @@ def demo2():
         result_img = output_dir / "pred" / f"{i:08d}_pred.png"
         img = cv2.imread(str(result_img), cv2.IMREAD_GRAYSCALE)
         img[img == 1] = 255
-        cv2.imwrite(str(result_img), img)
+        output_file = output_dir / "pred" / Path(img_path).name
+        cv2.imwrite(str(output_file), img)
 
 if __name__ == "__main__":
     # demo()

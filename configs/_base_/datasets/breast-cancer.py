@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-data_root = "data/bc-dataset/tmp/data_final"
+data_root = "data/bc-dataset/tmp/data002"
 img_scale = (1500, 1188)  # H, W
 # crop_size = (6000, 4751)
 crop_size = (512, 512)
