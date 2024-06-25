@@ -11,7 +11,7 @@ visualizer = dict(
 )
 log_processor = dict(by_epoch=False)
 log_level = "INFO"
-load_from = None
+load_from = "work_dirs/unet-s5-d16_deeplabv3_breast-cancer_ex001/iter_4000.pth"
 resume = False
 
 tta_model = dict(type="SegTTAModel")

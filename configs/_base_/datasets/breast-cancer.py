@@ -8,7 +8,7 @@ train_pipeline = [
     dict(type="LoadAnnotations"),
     dict(type="Resize", scale=img_scale, keep_ratio=False),
     dict(type="RandomFlip", prob=0.5),
-    # dict(type="PhotoMetricDistortion"),
+    dict(type="PhotoMetricDistortion"),
     dict(type="PackSegInputs"),
 ]
 test_pipeline = [
