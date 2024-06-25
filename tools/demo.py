@@ -43,7 +43,7 @@ def demo2():
 
     config_path = "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py"
     checkpoint_path = (
-        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_4000.pth"
+        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer_ex001/iter_4000.pth"
     )
 
     inferencer = MMSegInferencer(
@@ -54,10 +54,10 @@ def demo2():
         palette=[[0, 0, 0], [255, 255, 255]],
     )
 
-    imgs_path = "data/bc-dataset/tmp/data_final/images/val"
+    imgs_path = "data/bc-dataset/tmp/final/images/val"
     imgs_path = Path(imgs_path)
 
-    output_dir = "tmp/breast-cancer-7"
+    output_dir = "tmp/breast-cancer-10"
     output_dir = Path(output_dir)
 
     for i, img_path in tqdm(enumerate(sorted(list(imgs_path.glob("*.jpg"))))):

@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-data_root = "data/bc-dataset/tmp/data002"
+data_root = "data/bc-dataset/tmp/final"
 img_scale = (512, 512)
 
 train_pipeline = [
@@ -8,7 +8,7 @@ train_pipeline = [
     dict(type="LoadAnnotations"),
     dict(type="Resize", scale=img_scale, keep_ratio=False),
     dict(type="RandomFlip", prob=0.5),
-    dict(type="PhotoMetricDistortion"),
+    # dict(type="PhotoMetricDistortion"),
     dict(type="PackSegInputs"),
 ]
 test_pipeline = [
@@ -19,7 +19,8 @@ test_pipeline = [
     dict(type="LoadAnnotations"),
     dict(type="PackSegInputs"),
 ]
-img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+# img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+img_ratios = [1.0]
 tta_pipeline = [
     dict(type="LoadImageFromFile", backend_args=None),
     dict(
