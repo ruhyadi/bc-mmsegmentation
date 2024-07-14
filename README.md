@@ -29,7 +29,18 @@ After that, you will directly enter the devcontainer and you can start developin
 
 ### Training
 
-To be added.
+```bash
+python tools/train.py \
+    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py
+```
+
+### Testing
+
+```bash
+python tools/test.py \
+    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_640x640_best/iter_40000.pth
+```
 
 ## Acknowledgement
 

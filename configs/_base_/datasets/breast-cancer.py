@@ -1,7 +1,7 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
 data_root = "data/bc-dataset/tmp/final"
-img_scale = (512, 512)
+img_scale = (640, 640)
 
 train_pipeline = [
     dict(type="LoadImageFromFile"),
@@ -60,7 +60,7 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        data_prefix=dict(img_path="images/val", seg_map_path="annotations/val"),
+        data_prefix=dict(img_path="images/train", seg_map_path="annotations/train"),
         pipeline=test_pipeline,
     ),
 )
