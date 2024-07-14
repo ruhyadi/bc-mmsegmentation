@@ -1,28 +1,26 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-data_root = "data/bc-dataset/tmp/data002"
-img_scale = (1500, 1188)  # H, W
-# crop_size = (6000, 4751)
-crop_size = (512, 512)
+data_root = "data/bc-dataset/tmp/final"
+img_scale = (640, 640)
 
 train_pipeline = [
     dict(type="LoadImageFromFile"),
     dict(type="LoadAnnotations"),
-    dict(type="RandomResize", scale=img_scale, ratio_range=(0.5, 2.0), keep_ratio=True),
-    dict(type="RandomCrop", crop_size=crop_size, cat_max_ratio=0.75),
+    dict(type="Resize", scale=img_scale, keep_ratio=False),
     dict(type="RandomFlip", prob=0.5),
     dict(type="PhotoMetricDistortion"),
     dict(type="PackSegInputs"),
 ]
 test_pipeline = [
     dict(type="LoadImageFromFile"),
-    dict(type="Resize", scale=img_scale, keep_ratio=True),
+    dict(type="Resize", scale=img_scale, keep_ratio=False),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
     dict(type="LoadAnnotations"),
     dict(type="PackSegInputs"),
 ]
-img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+# img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
+img_ratios = [1.0]
 tta_pipeline = [
     dict(type="LoadImageFromFile", backend_args=None),
     dict(
@@ -39,13 +37,13 @@ tta_pipeline = [
     ),
 ]
 train_dataloader = dict(
-    batch_size=4,
-    num_workers=4,
+    batch_size=2,
+    num_workers=2,
     persistent_workers=True,
     sampler=dict(type="InfiniteSampler", shuffle=True),
     dataset=dict(
         type="RepeatDataset",
-        times=40000,
+        times=10000,
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
@@ -62,7 +60,7 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        data_prefix=dict(img_path="images/val", seg_map_path="annotations/val"),
+        data_prefix=dict(img_path="images/train", seg_map_path="annotations/train"),
         pipeline=test_pipeline,
     ),
 )

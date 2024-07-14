@@ -1,4 +1,9 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+
+import rootutils
+
+ROOT = rootutils.autosetup()
+
 import argparse
 import os
 import os.path as osp

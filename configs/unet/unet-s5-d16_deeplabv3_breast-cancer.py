@@ -5,11 +5,11 @@ _base_ = [
     # "../_base_/schedules/schedule_10k.py",
     "../_base_/schedules/schedule_40k.py",
 ]
-crop_size = (512, 512)
+crop_size = (640, 640)
 stride = (341, 341)
 data_preprocessor = dict(size=crop_size)
 model = dict(
-    data_preprocessor=data_preprocessor,
+data_preprocessor=data_preprocessor,
     test_cfg=dict(crop_size=crop_size, stride=stride),
     decode_head=dict(
         loss_decode=[
