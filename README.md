@@ -39,7 +39,7 @@ python tools/train.py \
 ```bash
 python tools/test.py \
     configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py \
-    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_640x640_best/iter_40000.pth
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_32000.pth
 ```
 
 ## Acknowledgement

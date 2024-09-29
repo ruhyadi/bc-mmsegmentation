@@ -12,7 +12,7 @@ def demo():
     """Demo script."""
     config_path = "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py"
     checkpoint_path = (
-        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_28000.pth"
+        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_32000.pth"
     )
 
     model = init_model(config_path, checkpoint_path, "cpu")
@@ -43,7 +43,7 @@ def demo2():
 
     config_path = "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py"
     checkpoint_path = (
-        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_28000.pth"
+        "work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth"
     )
 
     inferencer = MMSegInferencer(
@@ -59,14 +59,18 @@ def demo2():
     imgs_path = Path(imgs_path)
 
     # output_dir = "tmp/breast-cancer-14-dice-57-40k"
-    output_dir = "tmp/breast-cancer-640x640-end2end"
+    output_dir = "tmp/breast-cancer-640x640-end2end-val"
     output_dir = Path(output_dir)
 
     for i, img_path in tqdm(enumerate(sorted(list(imgs_path.glob("*.jpg"))))):
         inferencer(str(img_path), show=False, out_dir=str(output_dir))
         result_img = output_dir / "pred" / f"{i:08d}_pred.png"
         img = cv2.imread(str(result_img), cv2.IMREAD_GRAYSCALE)
-        img[img == 1] = 255
+
+        # convert contours to class
+        img[img == 1] = 100
+        img[img == 2] = 200
+        
         output_file = output_dir / "pred" / Path(img_path).name
         cv2.imwrite(str(output_file), img)
 
