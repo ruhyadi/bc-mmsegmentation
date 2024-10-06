@@ -42,6 +42,40 @@ python tools/test.py \
     work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_32000.pth
 ```
 
+### Convert to ONNX
+
+```bash
+git clone https://github.com/open-mmlab/mmdeploy.git
+cd mmdeploy
+
+pip install mmsegmentation mmdeploy onnxruntime
+
+python tools/deploy.py \
+    configs/mmseg/segmentation_onnxruntime_dynamic.py \
+    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
+    demo/resources/cityscapes.png \
+    --work-dir mmdeploy_models/mmseg/ort \
+    --device cpu \
+    --show \
+    --dump-info
+```
+
+### Generate Confusion Matrix
+
+```bash
+python tools/test.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/unet-s5-d16_deeplabv3_breast-cancer.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/iter_40000.pth \
+    --out tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/pred_result.pkl
+
+python tools/analysis_tools/confusion_matrix.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/unet-s5-d16_deeplabv3_breast-cancer.py \
+    tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/pred_result.pkl \
+    tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/confusion_matrix \
+    --title "UNet-S5-D16-DeepLabV3 Breast Cancer"
+```
+
 ## Acknowledgement
 
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab Semantic Segmentation Toolbox and Benchmark.
