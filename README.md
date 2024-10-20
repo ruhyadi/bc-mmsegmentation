@@ -85,6 +85,15 @@ python tools/analysis_tools/confusion_matrix.py \
     --rm_background
 ```
 
+### Extract Metrics from Log File
+
+```bash
+python tools/metrics_from_log.py \
+    --log_file work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/20240928_152200/20240928_152200.log \
+    --categories background benign malignant \
+    --output_dir tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes_metrics
+```
+
 ## Acknowledgement
 
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab Semantic Segmentation Toolbox and Benchmark.
