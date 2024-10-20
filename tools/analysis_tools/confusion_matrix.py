@@ -40,6 +40,11 @@ def parse_args():
         help="title of the matrix color map",
     )
     parser.add_argument(
+        "--rm_background",
+        action="store_true",
+        help="remove background class when calculating confusion matrix",
+    )
+    parser.add_argument(
         "--cfg-options",
         nargs="+",
         action=DictAction,
@@ -195,6 +200,11 @@ def main():
 
     dataset = DATASETS.build(cfg.test_dataloader.dataset)
     confusion_matrix = calculate_confusion_matrix(dataset, results)
+    
+    if args.rm_background:
+        dataset.METAINFO["classes"] = dataset.METAINFO["classes"][1:]
+        confusion_matrix = confusion_matrix[1:, 1:]
+        
     plot_confusion_matrix(
         confusion_matrix,
         dataset.METAINFO["classes"],

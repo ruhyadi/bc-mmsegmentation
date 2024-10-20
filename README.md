@@ -42,6 +42,14 @@ python tools/test.py \
     work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_32000.pth
 ```
 
+### Inference
+
+Inference script is under development.
+
+```bash
+python tools/demo.py 
+```
+
 ### Convert to ONNX
 
 ```bash
@@ -73,7 +81,8 @@ python tools/analysis_tools/confusion_matrix.py \
     work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/unet-s5-d16_deeplabv3_breast-cancer.py \
     tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/pred_result.pkl \
     tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/confusion_matrix \
-    --title "UNet-S5-D16-DeepLabV3 Breast Cancer"
+    --title "UNet-S5-D16-DeepLabV3 Breast Cancer" \
+    --rm_background
 ```
 
 ## Acknowledgement
