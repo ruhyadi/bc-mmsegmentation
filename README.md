@@ -257,7 +257,22 @@ python tools/dmid/predict.py \
     --output_dir tmp/predictions
 ```
 
-The prediction results will be saved in the `tmp/predictions` directory.
+The prediction results will be saved in the `tmp/predictions` directory. The directory will contain the following files:
+
+```bash
+tmp
+└── predictions
+    ├── vis
+    │   ├── IMG402.jpg
+    │   ├── IMG403.jpg
+    │   ├── ...
+    │   └── IMG502.jpg
+    ├── biner
+    │   ├── IMG402.png
+    │   ├── IMG403.png
+    │   ├── ...
+    │   └── IMG502.png
+```
 
 ## Convert to ONNX
 

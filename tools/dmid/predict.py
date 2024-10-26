@@ -40,6 +40,10 @@ def predict(
     images_dir: Path = Path(images_dir)
     output_dir: Path = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    vis_output_dir = output_dir / "vis"
+    vis_output_dir.mkdir(parents=True, exist_ok=True)
+    biner_output_dir = output_dir / "biner"
+    biner_output_dir.mkdir(parents=True, exist_ok=True)
 
     # metadata
     metadata = Metadata()
@@ -120,9 +124,14 @@ def predict(
                 )
 
         # save image
-        output_path = output_dir / image_path.name
+        output_path = vis_output_dir / image_path.name
         img = cv2.resize(img, (0, 0), fx=resize_ratio, fy=resize_ratio)
         cv2.imwrite(str(output_path), img)
+
+        # save biner
+        output_path = biner_output_dir / f"{image_path.stem}.png"
+        preds = cv2.resize(preds, (0, 0), fx=resize_ratio, fy=resize_ratio) * 100
+        cv2.imwrite(str(output_path), preds)
 
     print(f"Predicted images are saved at {output_dir}")
 
