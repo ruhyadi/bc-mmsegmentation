@@ -234,6 +234,31 @@ python tools/analysis_tools/confusion_matrix.py \
 
 The confusion matrix will be saved in the `tmp/unet-s5-d16_deeplabv3_breast-cancer/confusion_matrix` directory. 
 
+## Prediction
+
+You can predict the image to get the segmentation mask using the following command:
+
+```bash
+python tools/dmid/predict.py \
+    --config_path work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    --weights_path work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
+    --images_dir data/DMID/training/images/val \
+    --output_dir tmp/predictions
+```
+
+You can also add `--metadata_csv_path` to compare the prediction with the ground truth data.
+
+```bash
+python tools/dmid/predict.py \
+    --config_path work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    --weights_path work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
+    --images_dir data/DMID/training/images/val \
+    --metadata_csv_path data/DMID/metadata/metadata.csv \
+    --output_dir tmp/predictions
+```
+
+The prediction results will be saved in the `tmp/predictions` directory.
+
 ## Convert to ONNX
 
 ONNX is an open format built to represent machine learning models. With ONNX format we can convert the model to other formats such as TensorRT, CoreML, and OpenVINO. One of the reasons to convert the model to ONNX in this case is to visualize the model using [Netron](https://netron.app/) tool.
