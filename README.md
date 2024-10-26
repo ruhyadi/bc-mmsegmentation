@@ -119,9 +119,87 @@ Create a dataset configuration in `configs/_base_/datasets` directory. In this p
 
 ##### 3. Create model configuration
 
-Create a model configuration in `configs/_base_/models` directory. In this project, we have created the `unet-s5-d16_deeplabv3_breast-cancer.py` model configuration. You can see the details in the [configs/_base_/models/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py).
+Create a model configuration in `configs/_base_/models` directory. In this project, we have created:
 
-### UNET with DeepLabV3
+- `unet-s5-d16_deeplabv3_breast-cancer.py`: UNET with DeeplabV3 head. You can see the details in the [configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py).
+
+#### UNET DeeplabV3
+
+UNET with DeeplabV3 head is a model that combines the UNET architecture with the DeeplabV3 head. The model config is defined in the [configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py) file. The model is trained using the following command:
+
+```bash
+python tools/train.py \
+    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py
+```
+
+The training script will save the model checkpoints in the `work_dirs/unet-s5-d16_deeplabv3_breast-cancer` directory. The directory will contain the following files:
+
+```bash
+work_dirs
+└── unet-s5-d16_deeplabv3_breast-cancer
+    ├── 20240928_223152 # timestamp
+    │   ├── vis_data
+    │   │   └── config.py # training configuration
+    │   └── 20240928_223048.log # log file
+    ├── iter_4000.pth # model checkpoint
+    ├── iter_8000.pth # model checkpoint
+    ├── ... # model checkpoints
+    ├── iter_40000.pth # model checkpoint
+    ├── last_checkpoint # last model checkpoint
+    └── unet-s5-d16_deeplabv3_breast-cancer.py # model configuration
+```
+
+### Evaluation
+
+You can evaluate the model using the following command:
+
+```bash
+python tools/test.py \
+    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_XXXXX.pth
+```
+
+The evaluation script will save the evaluation results in the `work_dirs/unet-s5-d16_deeplabv3_breast-cancer` directory. The directory will contain the following files:
+
+```bash
+work_dirs
+└── unet-s5-d16_deeplabv3_breast-cancer
+    ├── 20240928_223152
+    │   ├── vis_data
+    │   │   └── config.py
+    │   ├── 20240928_223048.json # evaluation results
+    │   └── 20240928_223048.log
+    ...
+```
+
+Inside the `YYYYMMDD_HHMMSS.json` file, you will find the evaluation results in the following format:
+
+```json
+{
+    "aAcc": 99.94, 
+    "mDice": 98.58, 
+    "mAcc": 98.4, 
+    "data_time": 0.04383463859558105, 
+    "time": 0.41584926538689193
+}
+```
+
+Inside the `YYYYMMDD_HHMMSS.log` file, you will find the evaluation log in the following format:
+
+```bash
+...
+2024/09/28 22:33:26 - mmengine - INFO - per class results:
+2024/09/28 22:33:26 - mmengine - INFO - 
++------------+-------+-------+
+|   Class    |  Dice |  Acc  |
++------------+-------+-------+
+| background | 99.97 | 99.97 |
+|   benign   | 97.64 | 97.16 |
+| malignant  | 98.13 | 98.06 |
++------------+-------+-------+
+2024/09/28 22:33:26 - mmengine - INFO - Iter(test) [215/215]    aAcc: 99.9400  mDice: 98.5800  mAcc: 98.4000  data_time: 0.0438  time: 0.4158
+```
+
 
 ## Acknowledgement
 
