@@ -4,12 +4,19 @@
     "remoteUser": "didi",
     "build": {
         "dockerfile": "../dockerfile.devel",
-        "args": { "USERNAME": "didi" }
+        "args": {
+            "USERNAME": "didi"
+        }
     },
     "workspaceFolder": "/app",
     "workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind",
-    "runArgs": ["--gpus=all", "--shm-size=16g"],
-    "containerEnv": {"TZ": "Asia/Jakarta"},
+    "runArgs": [
+        "--gpus=all",
+        "--shm-size=16g"
+    ],
+    "containerEnv": {
+        "TZ": "Asia/Jakarta"
+    },
     "postCreateCommand": "pip install --no-cache-dir -e .",
     "customizations": {
         "vscode": {
@@ -17,6 +24,7 @@
                 "ms-python.python",
                 "ms-python.vscode-pylance",
                 "ms-python.black-formatter",
+                "ms-python.isort",
                 "eamodio.gitlens",
                 "redhat.vscode-yaml",
                 "yzhang.markdown-all-in-one"
