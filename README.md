@@ -1,5 +1,17 @@
 # MMSegmentation for Breast Cancer Research
 
+## Introduction
+
+This project is a research project to develop a semantic segmentation model for breast cancer diagnosis. The project uses the [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) library to train and evaluate the segmentation model. The dataset used in this project is the **Digital mammography Dataset for Breast Cancer Diagnosis Research (DMID)** [Figshare DMID](https://figshare.com/articles/dataset/_b_Digital_mammography_Dataset_for_Breast_Cancer_Diagnosis_Research_DMID_b_DMID_rar/24522883).
+
+## Models
+
+The models listed below are the segmentation models that have been trained and evaluated in DMID dataset. The models can be found in the [Github Release](https://github.com/ruhyadi/bc-mmsegmentation/releases). The models are trained using the following configurations:
+
+| Model Name            | Backbone | Head      | Classes                                 | mDice | mAcc | aAcc  | Config                                                        | Weight                                                                                                                             |
+| --------------------- | -------- | --------- | --------------------------------------- | ----- | ---- | ----- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| UNET-S5-D16-DeepLabV3 | UNET     | DeepLabV3 | 3 (`background`, `benign`, `malignant`) | 98.58 | 98.4 | 99.94 | [config](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py) | [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/unet-s5-d16_deeplabv3_breast-cancer_2024-09-28.zip) |
+
 ## Version
 
 The version of the MMSegmentation details are as follows:
