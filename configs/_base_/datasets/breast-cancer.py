@@ -1,6 +1,7 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-data_root = "data/bc-dataset/tmp/final"
+# data_root = "data/bc-dataset/tmp/final"
+data_root = "data/bc-dataset/tmp/data_final_cls"
 img_scale = (640, 640)
 
 train_pipeline = [

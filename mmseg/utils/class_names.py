@@ -490,7 +490,7 @@ def hsidrive_palette():
 
 def breastcancer_classes():
     """BreastCancer class names for external use."""
-    return ['background', 'tumor']
+    return ['background', 'benign', 'malignant']
 
 
 def breastcancer_palette():

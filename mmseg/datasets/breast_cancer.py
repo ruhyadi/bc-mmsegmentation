@@ -9,8 +9,8 @@ class BreastCancerDataset(BaseSegDataset):
     """Breast cancer dataset."""
 
     METAINFO = dict(
-        classes=(["background", "tumor"]),
-        pallete=[[100, 100, 100], [200, 200, 200]],
+        classes=(["background", "benign", "malignant"]),
+        pallete=[[50, 50, 50], [100, 100, 100], [150, 150, 150]],
     )
 
     def __init__(
