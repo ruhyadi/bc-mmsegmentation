@@ -73,7 +73,7 @@ data
 Next, you need to generate training and validation data by running the following command:
 
 ```bash
-python tools/prepare_dataset.py \
+python tools/dmid/prepare_dataset.py \
     --images_dir data/dmid/tiff_images \
     --anns_dir data/dmid/ground_truth \
     --metadata_csv_path data/dmid/metadata/metadata.csv \
