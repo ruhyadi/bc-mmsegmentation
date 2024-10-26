@@ -27,72 +27,83 @@ You can choose the devcontainer by pressing `F1` and type `Remote-Containers: Re
 
 After that, you will directly enter the devcontainer and you can start developing the project.
 
-### Training
+### Dataset Preparation
+
+Dataset for this project can be found at **Digital mammography Dataset for Breast Cancer Diagnosis Research** [Figshare DMID](https://figshare.com/articles/dataset/_b_Digital_mammography_Dataset_for_Breast_Cancer_Diagnosis_Research_DMID_b_DMID_rar/24522883). All you need to do is only download the following files:
+
+- `TIFF Images.zip`: Contains the original images in TIFF format. (4.32GB).
+
+You also need to download the ground truth data from [Github Release](https://github.com/ruhyadi/bc-mmsegmentation/releases). Download only the following files:
+
+-  `DMID_Ground_Truth.zip`: Contains the ground truth data for the images in PNG format. (2.0MB). [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/DMID_Ground_Truth.zip).
+-  `DMID_metadata.zip`: Contains the metadata for the images in CSV format. (1.0MB). [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/DMID_metadata.zip)
+
+Next, you need to extract the files and put them in the following directory structure:
 
 ```bash
-python tools/train.py \
-    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py
+data
+├── DMID
+│   ├── ground_truth
+│   │   ├── IMG001.png
+│   │   ├── IMG002.png
+│   │   ├── ...
+│   │   └── IMG502.png
+│   ├── metadata
+│   │   ├── metadata.csv
+│   └── tiff_images
+│       ├── IMG001.tif
+│       ├── IMG002.tif
+│       ├── ...
+│       └── IMG510.tif
 ```
 
-### Testing
+Next, you need to generate training and validation data by running the following command:
 
 ```bash
-python tools/test.py \
-    configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py \
-    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_32000.pth
+python tools/prepare_dataset.py \
+    --images_dir data/dmid/tiff_images \
+    --anns_dir data/dmid/ground_truth \
+    --metadata_csv_path data/dmid/metadata/metadata.csv \
+    --output_dir data/dmid/training \
+    --categories B M \
+    --resize_ratio 1.00 \
+    --train_ratio 0.8
 ```
 
-### Inference
-
-Inference script is under development.
+The script will generate the following directory structure:
 
 ```bash
-python tools/demo.py 
+data
+├── DMID
+│   ├── ground_truth
+│   ├── metadata
+│   ├── tiff_images
+│   ├── training
+│   │   ├── images
+│   │   │   ├── train
+│   │   │   │   ├── IMG001.jpg
+│   │   │   │   ├── IMG002.jpg
+│   │   │   │   ├── ...
+│   │   │   │   └── IMG401.jpg
+│   │   │   └── val
+│   │   │       ├── IMG402.jpg
+│   │   │       ├── IMG403.jpg
+│   │   │       ├── ...
+│   │   │       └── IMG502.jpg
+│   │   ├── annotations
+│   │   │   ├── train
+│   │   │   │   ├── IMG001.png
+│   │   │   │   ├── IMG002.png
+│   │   │   │   ├── ...
+│   │   │   │   └── IMG401.png
+│   │   │   └── val
+│   │   │       ├── IMG402.png
+│   │   │       ├── IMG403.png
+│   │   │       ├── ...
+│   │   │       └── IMG502.png
 ```
 
-### Convert to ONNX
-
-```bash
-git clone https://github.com/open-mmlab/mmdeploy.git
-cd mmdeploy
-
-pip install mmsegmentation mmdeploy onnxruntime
-
-python tools/deploy.py \
-    configs/mmseg/segmentation_onnxruntime_dynamic.py \
-    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
-    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
-    demo/resources/cityscapes.png \
-    --work-dir mmdeploy_models/mmseg/ort \
-    --device cpu \
-    --show \
-    --dump-info
-```
-
-### Generate Confusion Matrix
-
-```bash
-python tools/test.py \
-    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/unet-s5-d16_deeplabv3_breast-cancer.py \
-    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/iter_40000.pth \
-    --out tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/pred_result.pkl
-
-python tools/analysis_tools/confusion_matrix.py \
-    work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/unet-s5-d16_deeplabv3_breast-cancer.py \
-    tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/pred_result.pkl \
-    tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes/confusion_matrix \
-    --title "UNet-S5-D16-DeepLabV3 Breast Cancer" \
-    --rm_background
-```
-
-### Extract Metrics from Log File
-
-```bash
-python tools/metrics_from_log.py \
-    --log_file work_dirs/unet-s5-d16_deeplabv3_breast-cancer_3classes/20240928_152200/20240928_152200.log \
-    --categories background benign malignant \
-    --output_dir tmp/unet-s5-d16_deeplabv3_breast-cancer_3classes_metrics
-```
+We will use the `data/DMID/training` directory for training the model.
 
 ## Acknowledgement
 
