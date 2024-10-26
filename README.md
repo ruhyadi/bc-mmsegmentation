@@ -105,6 +105,24 @@ data
 
 We will use the `data/DMID/training` directory for training the model.
 
+### Training
+
+Training segmentation models with MMSegmentation is straightforward. You only need to do the following steps:
+
+##### 1. Create dataset module
+
+Create a dataset module in `mmseg/datasets` directory. In this project, we have created the `breast_cancer.py` dataset module. You can see the details in the [mmseg/datasets/breast_cancer.py](mmseg/datasets/breast_cancer.py).
+
+##### 2. Create dataset configuration
+
+Create a dataset configuration in `configs/_base_/datasets` directory. In this project, we have created the `breast_cancer.py` dataset configuration. You can see the details in the [configs/_base_/datasets/breast_cancer.py](configs/_base_/datasets/breast-cancer.py).
+
+##### 3. Create model configuration
+
+Create a model configuration in `configs/_base_/models` directory. In this project, we have created the `unet-s5-d16_deeplabv3_breast-cancer.py` model configuration. You can see the details in the [configs/_base_/models/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py).
+
+### UNET with DeepLabV3
+
 ## Acknowledgement
 
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab Semantic Segmentation Toolbox and Benchmark.

@@ -1,7 +1,6 @@
 # dataset settings
 dataset_type = "BreastCancerDataset"
-# data_root = "data/bc-dataset/tmp/final"
-data_root = "data/bc-dataset/tmp/data_final_cls"
+data_root = "data/DMID/training"
 img_scale = (640, 640)
 
 train_pipeline = [
@@ -20,7 +19,6 @@ test_pipeline = [
     dict(type="LoadAnnotations"),
     dict(type="PackSegInputs"),
 ]
-# img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 1.75]
 img_ratios = [1.0]
 tta_pipeline = [
     dict(type="LoadImageFromFile", backend_args=None),
