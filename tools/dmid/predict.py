@@ -27,9 +27,10 @@ def predict(
     images_dir: str,
     output_dir: str,
     device: str = "cuda:0",
-    classes: List[str] = ["background", "benign", "malignant"],
+    classes: List[str] = ["BG", "B", "M"],
     gt_dir: Optional[str] = None,
     metadata_csv_path: Optional[str] = None,
+    resize_ratio: float = 0.25,
 ) -> None:
     """Predict the image."""
     images_dir: Path = Path(images_dir)
@@ -56,11 +57,11 @@ def predict(
     for image_path in tqdm(image_paths, desc="Predict"):
         img = cv2.imread(str(image_path))
         result = inferencer(str(image_path), show=False)
-        preds = result["predictions"] * 100
+        preds = result["predictions"].astype(np.uint8)
 
         # find contours from predictions
         contours, _ = cv2.findContours(
-            image=preds.astype(np.uint8),
+            image=preds,
             mode=cv2.RETR_EXTERNAL,
             method=cv2.CHAIN_APPROX_SIMPLE,
         )
@@ -68,16 +69,11 @@ def predict(
         # draw contours
         mask = np.zeros_like(img)
         for contour in contours:
-            # get contour center with moment
-            M = cv2.moments(contour)
-            cx = int(M["m10"] / M["m00"])
-            cy = int(M["m01"] / M["m00"])
             # get contour parameter
             (x, y), (w, h), angle = cv2.fitEllipse(contour)
             radius = int(max(w, h) // 2)
-            contour_color = preds[cx, cy]
-            print(contour_color)
-            pred_txt = classes[int(contour_color)].upper()
+            contour_color = preds[int(y), int(x)]
+            pred_txt = f"Pred: {classes[int(contour_color)].upper()}"
 
             # draw contour
             cv2.drawContours(mask, [contour], -1, (0, 255, 0), -1)
@@ -88,7 +84,7 @@ def predict(
             cv2.putText(
                 img,
                 pred_txt,
-                (int(x) - radius, int(y) - radius - 10),
+                (int(x) - radius, int(y) - radius - 15),
                 cv2.FONT_HERSHEY_SIMPLEX,
                 3,
                 (0, 255, 0),
@@ -96,10 +92,9 @@ def predict(
                 cv2.LINE_AA,
             )
 
-            cv2.circle(img, (int(x), int(y)), 5, (0, 255, 0), -1)
-
         # save image
         output_path = output_dir / image_path.name
+        img = cv2.resize(img, (0, 0), fx=resize_ratio, fy=resize_ratio)
         cv2.imwrite(str(output_path), img)
 
         break
