@@ -27,7 +27,7 @@ You can choose the devcontainer by pressing `F1` and type `Remote-Containers: Re
 
 After that, you will directly enter the devcontainer and you can start developing the project.
 
-### Dataset Preparation
+## Dataset Preparation
 
 Dataset for this project can be found at **Digital mammography Dataset for Breast Cancer Diagnosis Research** [Figshare DMID](https://figshare.com/articles/dataset/_b_Digital_mammography_Dataset_for_Breast_Cancer_Diagnosis_Research_DMID_b_DMID_rar/24522883). All you need to do is only download the following files:
 
@@ -105,25 +105,25 @@ data
 
 We will use the `data/DMID/training` directory for training the model.
 
-### Training
+## Training
 
 Training segmentation models with MMSegmentation is straightforward. You only need to do the following steps:
 
-##### 1. Create dataset module
+#### 1. Create dataset module
 
 Create a dataset module in `mmseg/datasets` directory. In this project, we have created the `breast_cancer.py` dataset module. You can see the details in the [mmseg/datasets/breast_cancer.py](mmseg/datasets/breast_cancer.py).
 
-##### 2. Create dataset configuration
+#### 2. Create dataset configuration
 
 Create a dataset configuration in `configs/_base_/datasets` directory. In this project, we have created the `breast_cancer.py` dataset configuration. You can see the details in the [configs/_base_/datasets/breast_cancer.py](configs/_base_/datasets/breast-cancer.py).
 
-##### 3. Create model configuration
+#### 3. Create model configuration
 
 Create a model configuration in `configs/_base_/models` directory. In this project, we have created:
 
 - `unet-s5-d16_deeplabv3_breast-cancer.py`: UNET with DeeplabV3 head. You can see the details in the [configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py).
 
-#### UNET DeeplabV3
+### UNET DeeplabV3
 
 UNET with DeeplabV3 head is a model that combines the UNET architecture with the DeeplabV3 head. The model config is defined in the [configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py) file. The model is trained using the following command:
 
@@ -149,7 +149,7 @@ work_dirs
     └── unet-s5-d16_deeplabv3_breast-cancer.py # model configuration
 ```
 
-### Evaluation
+## Evaluation
 
 You can evaluate the model using the following command:
 
@@ -200,6 +200,56 @@ Inside the `YYYYMMDD_HHMMSS.log` file, you will find the evaluation log in the f
 2024/09/28 22:33:26 - mmengine - INFO - Iter(test) [215/215]    aAcc: 99.9400  mDice: 98.5800  mAcc: 98.4000  data_time: 0.0438  time: 0.4158
 ```
 
+### Confusion Matrix
+
+You can generate the confusion matrix using the following command:
+
+```bash
+# generate .pkl file for prediction results
+python tools/test.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
+    --out tmp/unet-s5-d16_deeplabv3_breast-cancer/pred_result.pkl
+
+# generate confusion matrix
+python tools/analysis_tools/confusion_matrix.py \
+    work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    tmp/unet-s5-d16_deeplabv3_breast-cancer/pred_result.pkl \
+    tmp/unet-s5-d16_deeplabv3_breast-cancer/confusion_matrix \
+    --title "UNet-S5-D16-DeepLabV3 Breast Cancer" \
+    --rm_background
+```
+
+The confusion matrix will be saved in the `tmp/unet-s5-d16_deeplabv3_breast-cancer/confusion_matrix` directory. 
+
+## Convert to ONNX
+
+ONNX is an open format built to represent machine learning models. With ONNX format we can convert the model to other formats such as TensorRT, CoreML, and OpenVINO. One of the reasons to convert the model to ONNX in this case is to visualize the model using [Netron](https://netron.app/) tool.
+
+Before converting the model to ONNX, you need to install the `mmdeploy` packages:
+
+```bash
+git clone https://github.com/open-mmlab/mmdeploy.git
+cd mmdeploy
+
+pip install mmsegmentation mmdeploy onnxruntime
+```
+
+Next, you can convert the model to ONNX using the following command:
+
+```bash
+python tools/deploy.py \
+    configs/mmseg/segmentation_onnxruntime_dynamic.py \
+    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/unet-s5-d16_deeplabv3_breast-cancer.py \
+    ../work_dirs/unet-s5-d16_deeplabv3_breast-cancer/iter_40000.pth \
+    demo/resources/cityscapes.png \
+    --work-dir mmdeploy_models/mmseg/ort \
+    --device cpu \
+    --show \
+    --dump-info
+```
+
+The ONNX model will be saved in the `mmdeploy_models/mmseg/ort` directory.
 
 ## Acknowledgement
 
