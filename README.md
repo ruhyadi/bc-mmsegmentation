@@ -8,9 +8,10 @@ This project is a research project to develop a semantic segmentation model for 
 
 The models listed below are the segmentation models that have been trained and evaluated in DMID dataset. The models can be found in the [Github Release](https://github.com/ruhyadi/bc-mmsegmentation/releases). The models are trained using the following configurations:
 
-| Model Name            | Backbone | Head      | Classes                                 | mDice | mAcc | aAcc  | Config                                                        | Weight                                                                                                                             |
-| --------------------- | -------- | --------- | --------------------------------------- | ----- | ---- | ----- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| UNET-S5-D16-DeepLabV3 | UNET     | DeepLabV3 | 3 (`background`, `benign`, `malignant`) | 98.58 | 98.4 | 99.94 | [config](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py) | [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/unet-s5-d16_deeplabv3_breast-cancer_2024-09-28.zip) |
+| Model Name            | Backbone | Head      | Classes                                 | mDice | mAcc  | aAcc  | Config                                                        | Weight                                                                                                                             |
+| --------------------- | -------- | --------- | --------------------------------------- | ----- | ----- | ----- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| UNET-S5-D16-DeepLabV3 | UNET     | DeepLabV3 | 3 (`background`, `benign`, `malignant`) | 98.58 | 98.4  | 99.94 | [config](configs/unet/unet-s5-d16_deeplabv3_breast-cancer.py) | [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/unet-s5-d16_deeplabv3_breast-cancer_2024-09-28.zip) |
+| UNET-S5-D16-DeepLabV3 | UNET     | DeepLabV3 | 2 (`background`, `tumor`)               | 97.88 | 97.58 | 99.91 | See inside `.zip` file                                        | [Download](https://github.com/ruhyadi/bc-mmsegmentation/releases/download/v1.0/unet-s5-d16_deeplabv3_breast-cancer_2024-07-10.zip) |
 
 ## Version
 
