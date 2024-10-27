@@ -95,6 +95,16 @@ def predict(
             # get contour parameter
             (x, y), (w, h), angle = cv2.fitEllipse(contour)
             radius = int(max(w, h) // 2)
+            
+            # check for bounds
+            if (
+                int(x) < 0
+                or int(y) < 0
+                or int(x) >= preds.shape[1]
+                or int(y) >= preds.shape[0]
+            ):
+                print(f"Out of bounds: {x}, {y}")
+                continue
             contour_color = preds[int(y), int(x)]
 
             color = (0, 255, 0)  # green

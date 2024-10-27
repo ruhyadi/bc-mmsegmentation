@@ -2,7 +2,8 @@ _base_ = [
     "../_base_/models/deeplabv3_unet_s5-d16.py",
     "../_base_/datasets/breast-cancer.py",
     "../_base_/default_runtime.py",
-    "../_base_/schedules/schedule_40k.py",
+    # "../_base_/schedules/schedule_40k.py",
+    "../_base_/schedules/schedule_20k.py",
 ]
 crop_size = (640, 640)
 stride = (341, 341)
