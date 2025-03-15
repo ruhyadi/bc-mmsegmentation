@@ -95,7 +95,7 @@ class PrepareDataset:
             )
             self.setup_ann(
                 ann_path=str(ann_path),
-                output_path=str(self.new_anns_train_dir / ann_path.name),
+                output_path=str(self.new_anns_val_dir / ann_path.name),
                 categories=self.categories,
             )
 

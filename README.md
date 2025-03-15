@@ -74,10 +74,10 @@ Next, you need to generate training and validation data by running the following
 
 ```bash
 python tools/dmid/prepare_dataset.py \
-    --images_dir data/dmid/tiff_images \
-    --anns_dir data/dmid/ground_truth \
-    --metadata_csv_path data/dmid/metadata/metadata.csv \
-    --output_dir data/dmid/training \
+    --images_dir data/DMID/tiff_images \
+    --anns_dir data/DMID/ground_truth \
+    --metadata_csv_path data/DMID/metadata/metadata.csv \
+    --output_dir data/DMID/training \
     --categories B M \
     --resize_ratio 1.00 \
     --train_ratio 0.8
